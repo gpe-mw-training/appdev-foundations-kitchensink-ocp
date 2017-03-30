@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# This script simply gets a pre-compiled war file from a Nexus repository
+# and deploys it into the JBoss EAP Server.
+#
+
+NEXUS_URL=
+APP_GROUP_ID=
+APP_ARTIFACT_ID=
+APP_VERSION=
+WAR_FILE_LOCATION="${NEXUS_URL}/service/local/artifact/maven/redirect?r=public&g=${APP_GROUP_ID}&a=${APP_ARTIFACT_ID}&v=${APP_VERSION}&e=war"
+DEPLOY_DIR=$JBOSS_HOME/standalone/deployments
+APP_NAME=ROOT.war
+
+echo "deploying artifact found at $WAR_FILE_LOCATION to $DEPLOY_DIR/$APP_NAME"
+curl --insecure -L -o $DEPLOY_DIR/$APP_NAME $WAR_FILE_LOCATION
+
+exit 0
